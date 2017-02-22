@@ -1,2 +1,2 @@
 # ReactProgressiveImage
-A library to handle images loading in a professional an scalable way
+A library to handle images loading in a professional and scalable way

@@ -1,0 +1,23 @@
+.progressive-image_container {
+    position: relative;
+}
+
+.progressive-image_container_canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.progressive-image_container_image {
+    width: 100%;
+}
+
+.progressive-image_container-solid {
+    display: inline-block;
+}
+
+.progressive-image_container .hide-placeholder {
+    display: none;
+}
