@@ -1,5 +1,5 @@
 {
-  "name": "react-progressive-image",
+  "name": "react-progressive-loading",
   "version": "0.1.0",
   "description": "A library to handle images loading in a professional and scalable way",
   "main": "src/ProgressiveImage.js",
