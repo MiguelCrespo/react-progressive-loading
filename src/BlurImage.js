@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import StackBlur from '../shared/stackblur';
-import connect from './connect';
+import track from './tracker';
 
 class BlurImage extends Component {
   static propTypes = {
@@ -8,51 +8,53 @@ class BlurImage extends Component {
     className: PropTypes.string,
     alt: PropTypes.string,
     blurRadius: PropTypes.number,
-    trackElement: PropTypes.func.isRequired
+    trackElement: PropTypes.func.isRequired,
+    width: PropTypes.string.isRequired,
+    height: PropTypes.string.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-
-    this.setPlaceHolder = this.setPlaceHolder.bind(this);
+  static defaultProps = {
+    opacityTiming: 1.5
   }
 
   componentDidMount() {
     this.canvas = this.refs.canvas;
+    let width, height;
 
-    this.preImg.onload = () => {
-      StackBlur(this.preImg, this.refs.canvas, this.props.blurRadius, this.refs.container.offsetWidth, this.refs.container.offsetHeight);
+    width = /((\d(\.\d)?)+)/gi.exec(this.props.width)[1];
+    height = /((\d(\.\d)?)+)/gi.exec(this.props.height)[1];
+
+    this.refs.placeholder.onload = () => {
+      StackBlur(this.refs.placeholder, this.refs.canvas, this.props.blurRadius, parseFloat(width), parseFloat(height));
     };
   }
 
-  componentWillUpdate(nextProps) {
-    //StackBlur(this.preImg, this.canvas, nextProps.blurRadius, this.refs.container.offsetWidth, this.refs.container.offsetHeight);
-  }
-
-
-  setPlaceHolder(ref) {
-    this.preImg = ref;
-  }
-
   render() {
-    let hidePlaceholder = this.props.isLoaded ? 'hide-placeholder' : '';
+    return <div className="progressive-image_container" ref="container" style={{ position: 'relative' }}>
+      <img
+        className={`progressive-image_container_image progressive-image_container_image_placeholder`}
+        src={this.props.placeholderSrc} alt={this.props.alt} ref="placeholder"
+        width={this.props.width} height={this.props.height} style={{ display: 'none' }} />
 
-    return <div className="progressive-image_container" ref="container">
-      <div></div>
+      <img src={this.props.data.actualSrc} alt={this.props.alt} ref={this.props.trackElement} style={
+        {
+          width: this.props.width,
+          height: this.props.height,
+          position: 'absolute',
+          top: 0,
+          left: 0
+        }
+      } />
 
-      {!this.props.data.isLoaded && <div>
-        <img
-          className={`progressive-image_container_image progressive-image_container_image_placeholder ${hidePlaceholder}`}
-          src={this.props.placeholderSrc} alt={this.props.alt} ref={this.setPlaceHolder}
-          width={this.props.width} height={this.props.height} style={{ display: 'none' }} />
-
-        <canvas className={`progressive-image_container_canvas ${hidePlaceholder}`} ref="canvas" />
-      </div>
-      }
-
-      <img src={this.props.src} alt={this.props.alt} ref={this.props.trackElement} />
+      <canvas className={`progressive-image_container_canvas`} ref="canvas" style={
+        {
+          position: 'relative',
+          transition: `opacity ${this.props.opacityTiming}s`,
+          opacity: this.props.data.isLoaded ? 0 : 1
+        }
+      } />
     </div>
   }
 }
 
-export default connect(BlurImage);
+export default track(BlurImage);

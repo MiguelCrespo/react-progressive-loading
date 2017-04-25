@@ -19,21 +19,20 @@ export default function connect(WrappedComponent) {
     }
 
     componentDidMount() {
-      console.log('childComponent: ', this.refs.childComponent);
-
       window.addEventListener('scroll', this.checkViewport);
-      console.log('Element: ', this.element);
       this.element.onload = () => {
-        console.log('Image loaded');
+        if (this.state.actualSrc === this.props.src) {
+          this.setState({
+            isLoaded: true
+          });
+        }
       };
 
       this.element.onerror = () => {
-        console.log('Image error');
+        console.error('Image error');
       };
 
-      setTimeout(function () {
-        this.checkViewport();
-      }.bind(this), 2000);
+      this.checkViewport();
     }
 
     isInViewport() {
@@ -51,7 +50,6 @@ export default function connect(WrappedComponent) {
 
     checkViewport() {
       if (this.isInViewport() && !this.isLoading) {
-        console.log('Is in viewport');
         this.isLoading = true;
         this.setState({
           actualSrc: this.props.src
