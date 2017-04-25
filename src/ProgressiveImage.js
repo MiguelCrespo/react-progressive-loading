@@ -23,7 +23,6 @@ class ProgressiveImage extends React.Component {
       isLoaded: false
     };
 
-    console.log('ActualState: ', this.state);
     // Storage the original classes
     this._originalClasses = this.props.className ? this.props.className : '';
 
@@ -65,12 +64,12 @@ class ProgressiveImage extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.checkViewport);
-    this.element.onload = () => {
-      this.setState({
-        className: `${this._originalClasses} ${this.props.loadedClass}`,
-        isLoaded: true
-      });
-    };
+    /* this.element.onload = () => {
+       this.setState({
+         className: `${this._originalClasses} ${this.props.loadedClass}`,
+         isLoaded: true
+       });
+     };*/
 
     this.element.onerror = () => {
       this.setState({
@@ -78,7 +77,10 @@ class ProgressiveImage extends React.Component {
       });
     };
 
-    this.checkViewport();
+    setTimeout(function () {
+      console.log('Checking');
+      this.checkViewport();
+    }.bind(this), 2000);
   }
 
   render() {
@@ -89,22 +91,22 @@ class ProgressiveImage extends React.Component {
     switch (this.props.effect) {
       case EFFECT_NONE:
         return <SimpleImage src={this.state.actualSrc} className={this.state.className} alt={this.props.alt}
-                            setRef={this.setRef} width={this.props.width}
-                            height={this.props.height}/>;
+          setRef={this.setRef} width={this.props.width}
+          height={this.props.height} />;
         break;
       case EFFECT_SOLID:
         return <SolidImage src={this.state.actualSrc} className={this.state.className} alt={this.props.alt}
-                           setRef={this.setRef} color={this.props.color} width={this.props.width}
-                           height={this.props.height} isLoaded={this.state.isLoaded}/>;
+          setRef={this.setRef} color={this.props.color} width={this.props.width}
+          height={this.props.height} isLoaded={this.state.isLoaded} />;
         break;
       case EFFECT_BLUR:
         return <BlurImage src={this.state.actualSrc} placeholderSrc={this.props.placeholderSrc}
-                          className={this.state.className} alt={this.props.alt}
-                          setRef={this.setRef} width={this.props.width}
-                          height={this.props.height} isLoaded={this.state.isLoaded}/>;
+          className={this.state.className} alt={this.props.alt}
+          setRef={this.setRef} width={this.props.width}
+          height={this.props.height} isLoaded={this.state.isLoaded} />;
       default:
         return <SimpleImage src={this.state.actualSrc} className={this.state.className} alt={this.props.alt}
-                            setRef={this.setRef} width={this.props.width} height={this.props.height}/>;
+          setRef={this.setRef} width={this.props.width} height={this.props.height} />;
         break;
     }
 
