@@ -30,7 +30,7 @@ class BlurImage extends Component {
   }
 
   render() {
-    return <div className="progressive-image_container" ref="container" style={{ position: 'relative' }}>
+    return <div className="progressive-image_container" ref="container" style={{ position: 'relative', ... this.props.style }}>
       <img
         className={`progressive-image_container_image progressive-image_container_image_placeholder`}
         src={this.props.placeholderSrc} alt={this.props.alt} ref="placeholder"

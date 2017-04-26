@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from './styles.css';
 
 export default function connect(WrappedComponent) {
   return class extends React.Component {
