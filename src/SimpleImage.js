@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
+import track from './tracker';
 
+class SimpleImage extends Component {
+  render() {
+    let { alt, trackElement, className, width, height } = this.props;
+    return <img src={this.props.data.actualSrc} alt={alt} ref={trackElement} className={className} style={{ width, height }} />
+  }
+}
 
-const SimpleImage = ({src, alt, setRef, className, width, height}) => {
-  return <img src={src} alt={alt} ref={setRef} className={className} width={width} height={height}/>
-};
-
-SimpleImage.PropTypes = {
-  src: React.PropTypes.string.isRequired,
-  className: React.PropTypes.string,
-  alt: React.PropTypes.string
-};
-
-export default SimpleImage;
+export default track(SimpleImage);

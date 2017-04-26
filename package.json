@@ -1,10 +1,11 @@
 {
   "name": "react-progressive-loading",
-  "version": "0.1.0",
+  "version": "0.1.18",
   "description": "A library to handle images loading in a professional and scalable way",
-  "main": "src/ProgressiveImage.js",
+  "main": "./dist",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline"
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --env.dev",
+    "prepublish": "webpack --env.prod -p"
   },
   "repository": {
     "type": "git",
@@ -19,24 +20,26 @@
     "load"
   ],
   "author": "Miguel Crespo",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MiguelCrespo/ReactProgressiveImage/issues"
+    "url": "https://github.com/MiguelCrespo/react-progressive-loading/issues"
   },
-  "homepage": "https://github.com/MiguelCrespo/ReactProgressiveImage#readme",
+  "homepage": "https://github.com/MiguelCrespo/react-progressive-loading",
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.20.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.26.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.14.0",
+    "webpack": "^2.4.1",
     "webpack-dev-server": "^1.16.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   }
