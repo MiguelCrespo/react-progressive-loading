@@ -18,37 +18,24 @@ class BlurImage extends Component {
   }
 
   componentDidMount() {
-    this.canvas = this.refs.canvas;
-    let width, height;
-
-    width = /((\d(\.\d)?)+)/gi.exec(this.props.width)[1];
-    height = /((\d(\.\d)?)+)/gi.exec(this.props.height)[1];
-
-    this.refs.placeholder.onload = () => {
-      StackBlur(this.refs.placeholder, this.refs.canvas, this.props.blurRadius, parseFloat(width), parseFloat(height));
+    let image = new Image();
+    image.src = this.props.placeholderSrc;
+    image.onload = () => {
+      StackBlur(image, this.refs.canvas, this.props.blurRadius, this.props.width, this.props.height);
     };
   }
 
   render() {
-    return <div className="progressive-image_container" ref="container" style={{ position: 'relative', ... this.props.style }}>
-      <img
-        className={`progressive-image_container_image progressive-image_container_image_placeholder`}
-        src={this.props.placeholderSrc} alt={this.props.alt} ref="placeholder"
-        width={this.props.width} height={this.props.height} style={{ display: 'none' }} />
-
+    return <div className="progressive-image_container" ref="container" style={{ position: 'relative', height: this.props.height, width: this.props.width, ... this.props.style }}>
       <img src={this.props.data.actualSrc} alt={this.props.alt} ref={this.props.trackElement} style={
         {
           width: this.props.width,
-          height: this.props.height,
-          position: 'absolute',
-          top: 0,
-          left: 0
+          height: this.props.height
         }
       } />
 
       <canvas className={`progressive-image_container_canvas`} ref="canvas" style={
         {
-          position: 'relative',
           transition: `opacity ${this.props.opacityTiming}s`,
           opacity: this.props.data.isLoaded ? 0 : 1
         }

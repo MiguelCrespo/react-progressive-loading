@@ -39,9 +39,12 @@ var shg_table = [
 function stackBlurImage(img, canvas, radius, w, h) {
   var nw = img.naturalWidth;
   var nh = img.naturalHeight;
+  canvas.style.width = w + /((\d(\.\d)?)+)([\w+%])/gi.exec(w)[4];
+  canvas.style.height = h + /((\d(\.\d)?)+)([\w+%])/gi.exec(h)[4];
 
-  canvas.style.width = w + "px";
-  canvas.style.height = h + "px";
+  w = parseFloat(/((\d(\.\d)?)+)([\w+%])/gi.exec(w)[1]);
+  h = parseFloat(/((\d(\.\d)?)+)([\w+%])/gi.exec(h)[1]);
+
   canvas.width = w;
   canvas.height = h;
 

@@ -17,7 +17,7 @@ module.exports = function (env) {
     output.libraryTarget = 'commonjs2';
     plugins.push(new UglifyJsPlugin({ minimize: true }));
     externals.react = {
-      commonjs2: "React",
+      commonjs2: "react",
     };
 
     entryPoints.push('./src/ProgressiveImage.js');

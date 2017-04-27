@@ -9,19 +9,8 @@ ReactDOM.render(
 
     <BlurImage
       src="https://wallpaperscraft.com/image/stars_sky_shore_84534_1920x1080.jpg"
-      placeholderSrc="/src/test.jpg" height="1080px"
-      effect="blur" blurRadius={50} width="1920px" />
-
-    <BlurBackground
-      src="https://wallpaperscraft.com/image/stars_sky_shore_84534_1920x1080.jpg"
-      placeholderSrc="/src/test.jpg" height="1080px"
-      effect="blur" blurRadius={50} width="1920px" >
-      <h1>Hello!</h1>
-    </BlurBackground>
-
-    <SimpleImage
-      src="https://wallpaperscraft.com/image/stars_sky_shore_84534_1920x1080.jpg"
-      placeholderSrc="/src/test.jpg" height="1080px" width="1920px" />
+      placeholderSrc="/src/test.jpg" height="100%"
+      effect="blur" blurRadius={50} width="100%" />
 
   </div>
   , document.getElementById('container'));
