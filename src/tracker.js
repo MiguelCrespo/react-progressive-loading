@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import _ from './styles.css';
 
 export default function connect(WrappedComponent) {
@@ -7,7 +7,7 @@ export default function connect(WrappedComponent) {
       actualSrc: this.props.placeholderSrc,
       isLoaded: false
     }
-
+    
     static defaultProps = {
       offset: 0
     }
@@ -36,6 +36,10 @@ export default function connect(WrappedComponent) {
       this.checkViewport();
     }
 
+    componentWillUnmount() {
+      window.removeEventListener('scroll', this.checkViewport);
+    }
+
     isInViewport() {
       const rect = this.element.getBoundingClientRect();
       const viewportHeight = (window.innerHeight || document.documentElement.clientHeight);
@@ -55,6 +59,8 @@ export default function connect(WrappedComponent) {
         this.setState({
           actualSrc: this.props.src
         });
+
+        window.removeEventListener('scroll', this.checkViewport);
       }
 
       return null;
