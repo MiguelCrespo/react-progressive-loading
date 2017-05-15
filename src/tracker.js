@@ -4,10 +4,10 @@ import _ from './styles.css';
 export default function connect(WrappedComponent) {
   return class extends React.Component {
     state = {
-      actualSrc: this.props.placeholderSrc,
+      actualSrc: this.props.placeholderSrc ? this.props.placeholderSrc : this.props.src,
       isLoaded: false
     }
-    
+
     static defaultProps = {
       offset: 0
     }
