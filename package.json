@@ -1,6 +1,6 @@
 {
   "name": "react-progressive-loading",
-  "version": "0.2.24",
+  "version": "0.2.25",
   "description": "A library to handle images loading in a professional and scalable way",
   "main": "./dist",
   "scripts": {
