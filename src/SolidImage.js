@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -22,11 +23,11 @@ const SolidImage = ({src, alt, setRef, className, color, width, height, isLoaded
 };
 
 SolidImage.PropTypes = {
-  src: React.PropTypes.string.isRequired,
-  color: React.PropTypes.string.isRequired,
-  isLoaded: React.PropTypes.bool,
-  className: React.PropTypes.string,
-  alt: React.PropTypes.string
+  src: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  isLoaded: PropTypes.bool,
+  className: PropTypes.string,
+  alt: PropTypes.string
 };
 
 export default SolidImage;
