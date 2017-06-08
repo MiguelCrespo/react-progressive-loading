@@ -21,7 +21,36 @@ export default function connect(WrappedComponent) {
     }
 
     componentDidMount() {
+      this.setListener();
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+      let result = this.props.src !== nextProps.src
+        || (this.props.placeholderSrc !== nextProps.placeholderSrc)
+        || (this.state.actualSrc !== nextState.actualSrc)
+        || (!this.state.isLoaded && nextState.isLoaded);
+
+      return result;
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener('scroll', this.checkViewport);
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (this.props.src !== nextProps.src) {
+        this.setState({
+          actualSrc: nextProps.placeholderSrc ? nextProps.placeholderSrc : nextProps.src,
+          isLoaded: false
+        });
+
+        this.setListener();
+      }
+    }
+
+    setListener() {
       window.addEventListener('scroll', this.checkViewport);
+
       this.element.onload = () => {
         if (this.state.actualSrc === this.props.src) {
           this.setState({
@@ -31,14 +60,10 @@ export default function connect(WrappedComponent) {
       };
 
       this.element.onerror = () => {
-        console.error('Image error');
+        console.error('Image error: ', this.state.actualSrc);
       };
 
       this.checkViewport();
-    }
-
-    componentWillUnmount() {
-      window.removeEventListener('scroll', this.checkViewport);
     }
 
     isInViewport() {
