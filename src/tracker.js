@@ -10,7 +10,8 @@ export default function connect(WrappedComponent) {
     }
 
     static defaultProps = {
-      offset: 0
+      offset: 0,
+      placeholderSrc: ''
     }
 
     constructor(props) {
@@ -44,14 +45,18 @@ export default function connect(WrappedComponent) {
           isLoaded: false
         });
 
-        this.setListener();
+        this.element.onload = () => {
+          this.setListener();
+        }
       }
     }
 
     setListener() {
       window.addEventListener('scroll', this.checkViewport);
+      this.isLoading = false;
 
       this.element.onload = () => {
+        // If the url is the same mark the image as loaded
         if (this.state.actualSrc === this.props.src) {
           this.setState({
             isLoaded: true
@@ -60,10 +65,17 @@ export default function connect(WrappedComponent) {
       };
 
       this.element.onerror = () => {
-        console.error('Image error: ', this.state.actualSrc);
+        if (this.props.errorImage) {
+          this.isLoading = true;
+          window.removeEventListener('scroll', this.checkViewport);
+
+          this.setState({
+            actualSrc: this.props.errorImage
+          });
+        }
       };
 
-      this.checkViewport();
+      requestAnimationFrame(_ => this.checkViewport());
     }
 
     isInViewport() {
@@ -88,8 +100,6 @@ export default function connect(WrappedComponent) {
 
         window.removeEventListener('scroll', this.checkViewport);
       }
-
-      return null;
     }
 
     trackElement(element) {
